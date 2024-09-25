@@ -1,0 +1,37 @@
+ERROR:root:Error: Excel file 'angel.xlsx' not found.
+Traceback (most recent call last):
+  File "/Users/angelmondragon/Prod/pod-automation/main.py", line 15, in read_excel
+    wb = openpyxl.load_workbook(file_path)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/angelmondragon/Prod/pod-automation/session/lib/python3.12/site-packages/openpyxl/reader/excel.py", line 346, in load_workbook
+    reader = ExcelReader(filename, read_only, keep_vba,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/angelmondragon/Prod/pod-automation/session/lib/python3.12/site-packages/openpyxl/reader/excel.py", line 123, in __init__
+    self.archive = _validate_archive(fn)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/angelmondragon/Prod/pod-automation/session/lib/python3.12/site-packages/openpyxl/reader/excel.py", line 95, in _validate_archive
+    archive = ZipFile(filename, 'r')
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/zipfile/__init__.py", line 1331, in __init__
+    self.fp = io.open(file, filemode)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'angel.xlsx'
+
+ERROR:root:The file TS/TS-CRACK-BLK-XL.png does not exist.
+NoneType: None
+
+ERROR:root:The file TS/TS-CRACK-BLK.png does not exist.
+NoneType: None
+
+ERROR:root:The file TS/TS-BIGDAWG-BLK-S.png does not exist.
+NoneType: None
+
+ERROR:root:The file TS/TS-BIGDAWG-BLK.png does not exist.
+NoneType: None
+
+ERROR:root:The file TS/TS-CRACK-BLK-XL.png does not exist.
+NoneType: None
+
+ERROR:root:The file TS/TS-CRACK-BLK.png does not exist.
+NoneType: None
+
