@@ -3,19 +3,16 @@ import os
 from PIL import Image 
 # import urllib.request
 
-
-
-# Wasatch SoftRIP API connection details
 wasatchSoftRIP = '127.0.0.1:80'  
 printUnit = 1  
 
-# Layout parameters for S-3XL and 4XL-5XL
+# Layout params for S-3XL and 4XL-5XL
 layout_params = {
     "S-3XL": {"width": 11.0, "height": 0.0},
     "4XL-5XL": {"width": 12.0, "height": 0.0}  
 }
 
-# Function to read CSV and extract SKU information
+# read CSV and extract SKU information
 def process_csv(file_path):
     sku_dict = {} 
 
@@ -47,7 +44,7 @@ def parse_sku(sku):
     design = parts[2] 
     size = parts[-1]
 
-    # Not sure if we should add more if the SKU is greater
+    # Not sure if we should add more if the SKU is greater than 5 indexes @Scrub
     if len(parts) > 5:
         design += '-' + parts[3] 
 
@@ -65,8 +62,8 @@ def categorize_size(size):
     else:
         return 'Other' 
     
-
-# Function to create a layout and submit it to Wasatch SoftRIP for printing
+# https://www.wasatch.com/htmlHelp/en/network/xmlaccess/xmlJobSubmission.html
+# Function to create a layout and submit it to Wasatch 
 def create_and_submit_layout(image_queue):
     url = f'http://{wasatchSoftRIP}/xmlSubmission.dyn?'
     data = '<WASATCH ACTION=JOB><PRINTUNIT>' + str(printUnit) + '</PRINTUNIT>'
@@ -103,7 +100,7 @@ def create_and_submit_layout(image_queue):
     print(url)
     print(data)
     
-    # Submit the job to Wasatch
+    # Submit the job to Wasatch <-- only uncomment when ready to test @scrub
     # url += urllib.parse.quote_plus(data)
     # try:
     #     p = urllib.request.urlopen(url)
@@ -121,7 +118,6 @@ def get_image_height(image_path, target_width):
         with Image.open(image_path) as img:
             original_width, original_height = img.size
             
-            # Calculate the new height proportional to the target width
             aspect_ratio = original_height / original_width
             target_height = target_width * aspect_ratio
             
@@ -134,7 +130,6 @@ def get_image_height(image_path, target_width):
 def create_image_queue(sku_dict, images_folder):
     image_queue = []
     
-    # Add 'S-3XL' SKUs to the queue first
     for sku, count in sorted(sku_dict.items()):
         if 'S-3XL' in sku:
             image_path = find_image_for_sku(sku, images_folder)
@@ -142,7 +137,6 @@ def create_image_queue(sku_dict, images_folder):
                 for _ in range(count):
                     image_queue.append((image_path, 'S-3XL'))
 
-    # Add '4XL-5XL' SKUs to the queue afterward
     for sku, count in sorted(sku_dict.items()):
         if '4XL-5XL' in sku:
             image_path = find_image_for_sku(sku, images_folder)
@@ -170,13 +164,13 @@ def main():
 
     sku_count = process_csv(file_path)
 
-    # Print the result
+    # for testing purposes. You can comment out on production @Scrub
     for sku, count in sku_count.items():
         print(f"{sku}: {count}")
 
     image_queue = create_image_queue(sku_count, images_folder)
 
-    # Print the image queue (for testing purposes)
+    # for testing purposes. You can comment out on production @Scrub
     for image in image_queue:
         print(image)
 
